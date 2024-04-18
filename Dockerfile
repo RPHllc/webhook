@@ -8,7 +8,7 @@ FROM node:${NODE_VERSION}
 WORKDIR /app
 
 # Install Git
-RUN apk update && apk add --no-cache git
+RUN apk update && apk add --no-cache git docker-cli
 
 # Copy package.json and package-lock.json
 COPY ./package*.json /app/
