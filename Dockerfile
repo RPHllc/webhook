@@ -18,11 +18,7 @@ RUN npm install --only=production && npm cache clean --force
 # Copy the application code (except files in .dockerignore)
 COPY . /app
 
-# For extra security, add a new user and use it
-#RUN addgroup -S appgroup && \
-#    adduser -S appuser -G appgroup -u 1001 -D
-#USER appuser
-USER node
+USER root
 
 # Configure Git to recognize the project directory as a safe
 RUN git config --global --add safe.directory /app/project_directory
