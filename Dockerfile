@@ -7,9 +7,8 @@ FROM node:${NODE_VERSION}
 # Create app directory to hold the application code inside the image
 WORKDIR /app
 
-# Install Git and configure safe directory
-RUN apk update && apk add --no-cache git && \
-    git config --global --add safe.directory /app/project_directory
+# Install Git
+RUN apk update && apk add --no-cache git
 
 # Copy package.json and package-lock.json
 COPY ./package*.json /app/
@@ -22,6 +21,9 @@ COPY . /app
 # For extra security, add a new user and use it
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 USER appuser
+
+# Configure Git to recognize the project directory as a safe
+RUN git config --global --add safe.directory /app/project_directory
 
 # Expose the port the app runs on
 EXPOSE 80 
