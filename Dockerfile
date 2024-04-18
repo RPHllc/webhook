@@ -28,5 +28,7 @@ RUN git config --global --add safe.directory /app/project_directory
 # Expose the port the app runs on
 EXPOSE 80 
 
+RUN ls -la /app/project_directory
+
 # Application start default (it can be overridden) 
 CMD ["npm", "start"]
