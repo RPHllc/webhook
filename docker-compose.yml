@@ -15,3 +15,4 @@ services:
       - ${EXTERNAL_PORT}:80
     environment:
       PATH_TO_PROJECT: ${PATH_TO_PROJECT}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
