@@ -7,6 +7,9 @@ FROM node:${NODE_VERSION}
 # Create app directory to hold the application code inside the image
 WORKDIR /app
 
+# Install system dependencies including Git
+RUN apk update && apk add --no-cache git
+
 # Copy package.json and package-lock.json
 COPY ./package*.json /app/
 # Install only the dependencies and clean the cache
