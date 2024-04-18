@@ -8,8 +8,8 @@ FROM node:${NODE_VERSION}
 WORKDIR /app
 
 # Install Git and configure safe directory
-RUN apk update && apk add --no-cache git
-RUN git config --global --add safe.directory /app/project_directory
+RUN apk update && apk add --no-cache git && \
+    git config --global --add safe.directory /app/project_directory
 
 # Copy package.json and package-lock.json
 COPY ./package*.json /app/
