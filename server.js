@@ -21,8 +21,8 @@ app.post('/webhook', (req, res) => {
     const command = `
           cd ./project_directory &&
           git pull &&
-          docker compose down &&
-          docker compose up --build -d
+          docker-compose down &&
+          docker-compose up --build -d
       `;
     exec(command, (error, stdout, stderr) => {
       if (error) {
