@@ -19,7 +19,8 @@ RUN npm install --only=production && npm cache clean --force
 COPY . /app
 
 # For extra security, add a new user and use it
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN addgroup -S appgroup && \
+    adduser -S appuser -G appgroup -u 1000 -D
 USER appuser
 
 # Configure Git to recognize the project directory as a safe
@@ -27,8 +28,6 @@ RUN git config --global --add safe.directory /app/project_directory
 
 # Expose the port the app runs on
 EXPOSE 80 
-
-RUN ls -la ./project_directory
 
 # Application start default (it can be overridden) 
 CMD ["npm", "start"]
