@@ -1,0 +1,14 @@
+name: webhook
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NODE_VERSION=${NODE_VERSION}
+    image: rpontual/webhook:latest
+    restart: unless-stopped
+    ports:
+      - ${EXTERNAL_PORT}:80
+    environment:
+      PATH_TO_PROJECT: ${PATH_TO_PROJECT}
