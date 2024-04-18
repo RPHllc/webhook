@@ -1,3 +1,6 @@
+// Load environment variables
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const { exec } = require('child_process');
@@ -11,7 +14,7 @@ app.use(bodyParser.json());
 // Endpoint to handle webhook POST requests
 app.post('/webhook', (req, res) => {
   const command = `
-    cd ${PATH_TO_PROJECT} &&
+    cd ${process.env.PATH_TO_PROJECT} &&
     git pull &&
     docker-compose down &&
     docker-compose up --build -d
