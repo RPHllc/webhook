@@ -9,6 +9,7 @@ services:
     image: rpontual/webhook:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ${PATH_TO_PROJECT}:/app/project_directory
     restart: unless-stopped
     ports:
       - ${EXTERNAL_PORT}:80
