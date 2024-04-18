@@ -14,8 +14,8 @@ app.use(bodyParser.json());
 app.post('/webhook', (req, res) => {
   const command = `
     cd ./project_directory &&
-    git config --global credential.username RPHllc &&
-    git config --global credential.helper '!f() { echo "username=RPHllc"; echo "password=${process.env.GITHUB_TOKEN}"; }; f' &&
+    git config --global credential.username rphllc &&
+    echo "https://${process.env.GITHUB_USERNAME}:${process.env.GITHUB_TOKEN}@github.com" > ~/.git-credentials &&
     git pull &&
     docker-compose down &&
     docker-compose up --build -d
