@@ -11,6 +11,22 @@ const port = 80;
 app.use(bodyParser.json());
 
 app.post('/webhook', (req, res) => {
+  // Optionally, you can add security checks here (like verifying GitHub secrets)
+
+  // Execute the Docker update script
+  exec('./update_docker.sh', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return res.status(500).send('Server Error');
+    }
+    console.log(`stdout: ${stdout}`);
+    console.error(`stderr: ${stderr}`);
+
+    res.status(200).send('Docker update triggered');
+  });
+});
+/*
+app.post('/webhook', (req, res) => {
   const setupCredentials = `git config --global credential.helper 'store' && \\
                             echo "https://${process.env.GITHUB_USERNAME}:${process.env.GITHUB_TOKEN}@github.com" > ~/.git-credentials`;
   exec(setupCredentials, (setupError) => {
@@ -35,6 +51,7 @@ app.post('/webhook', (req, res) => {
     });
   });
 });
+*/
 
 // Start the server
 app.listen(port, () => {
