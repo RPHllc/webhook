@@ -7,6 +7,8 @@ services:
       args:
         - NODE_VERSION=${NODE_VERSION}
     image: rpontual/webhook:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
     ports:
       - ${EXTERNAL_PORT}:80
