@@ -14,7 +14,7 @@ app.post('/webhook', (req, res) => {
   // Optionally, you can add security checks here (like verifying GitHub secrets)
 
   // Execute the Docker update script
-  exec('.script_directory/update_tech_blog.sh', (error, stdout, stderr) => {
+  exec('./script_directory/update_tech_blog.sh', (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
       return res.status(500).send('Server Error');
