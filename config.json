@@ -1,0 +1,12 @@
+[
+ {
+  "project":"tech_blog",
+  "path":"~/tech_blog",
+  "script":"webhook.sh"
+ },
+ {
+  "project":"lemmy",
+  "path":"~/lemmy",
+  "script":"webhook.sh"
+ }
+]

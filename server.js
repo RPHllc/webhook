@@ -1,57 +1,45 @@
 require('dotenv').config();
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const { exec } = require('child_process');
+const bodyParser = require('body-parser');
+
+const { verifySignature } = require('./utils/withAuth.js') 
+const listeningSites = require('./config.json')
 
 const app = express();
-const port = 80;
+const port = 3002;
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-app.post('/webhook', (req, res) => {
-  // Optionally, you can add security checks here (like verifying GitHub secrets)
+app.post('/:project', (req, res) => {
+    console.log('Received webhook:', req.body);
 
-  // Execute the Docker update script
-  exec('./update_tech_blog.sh', (error, stdout, stderr) => {
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return res.status(500).send('Server Error');
+    if (!verifySignature(process.env.SECRET, req.headers['x-hub-signature-256'], JSON.stringify(req.body))) {
+        return res.status(401).send('Invalid signature');
     }
-    console.log(`stdout: ${stdout}`);
-    console.error(`stderr: ${stderr}`);
 
-    res.status(200).send('Docker update triggered');
-  });
-});
-/*
-app.post('/webhook', (req, res) => {
-  const setupCredentials = `git config --global credential.helper 'store' && \\
-                            echo "https://${process.env.GITHUB_USERNAME}:${process.env.GITHUB_TOKEN}@github.com" > ~/.git-credentials`;
-  exec(setupCredentials, (setupError) => {
-    if (setupError) {
-      console.error(`Setup error: ${setupError}`);
-      return res.status(500).send('Failed to setup Git credentials');
+    const siteConfig = listeningSites.find(site => site.project === req.params.project);
+    if (!siteConfig) {
+        return res.status(404).send('Configuration not found for the provided project');
     }
-    const command = `
-          cd ./project_directory &&
-          git pull &&
-          docker-compose down &&
-          docker-compose up --build -d
-      `;
+
+    const command = `cd ${siteConfig.path} && ./${siteConfig.script}`;
+
     exec(command, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Exec error: ${error}`);
-        return res.status(500).send('Server Error');
-      }
-      console.log(`stdout: ${stdout}`);
-      console.error(`stderr: ${stderr}`);
-      res.status(200).send('Docker update triggered');
+        if (error) {
+            console.error(`exec error: ${error}`);
+            return res.status(500).send('Failed to execute script');
+        }
+        console.log(`stdout: ${stdout}`);
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+        }
+        console.log('Script executed successfully');
+        res.status(200).send('Script executed successfully');
     });
-  });
 });
-*/
 
 // Start the server
 app.listen(port, () => {
