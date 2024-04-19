@@ -19,5 +19,23 @@ Installation:
 - Clone this repository (it will create the webhook directory)
 - `cd webhook`
 - `mv .env_example .env`
-- `nano .env` and enter a secret, this secret will add later to github
+- `nano .env` and
+  - enter a secret, this secret will add later to github
+  - choose the port
 - `nano config.json`
+  - you can have as many projects as you want
+  - project is the github repository name
+  - path is the project directory in the local machine
+  - script is the name of the script file that is to reside on the path directory
+- Now we need to configure node
+
+  - Install node in your local machine
+    `sudo apt install node npm`
+  - Initialize node
+    `node init`
+  - Install the needed packages
+    `npm i`
+
+  Running the server
+
+  - `node server.js`
