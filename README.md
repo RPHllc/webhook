@@ -11,7 +11,7 @@ This project automates the update process of Docker-based project when the sourc
 ## How it works:
 
 - The code runs directly on the machine, not on a container because we need to run a scripts on the host machine and containers are isolated for security reasons.
-- We will use node.js to run the service by listening to a port and triggering scripts that can be customized by repository.
+- We will use node.js to run the service by listening to a port and triggering scripts that can be customized by repository. For the service to launch automatically after a machine reboot or a crash, we will use pm2.
 
 ## Installation:
 
@@ -38,7 +38,13 @@ This project automates the update process of Docker-based project when the sourc
   - Install the needed packages
     `npm i`
 - Running the server
-  - `node server.js`
+  - Option 1 if you do not want the server to restart after a reboot or crash
+    - `node server.js`
+  - Option 2 to run with automatci restart
+    - Start your server with pm2
+      - `pm2 start server.js`
+      - `pm2 save`
+      - `pm2 startup`
 
 ## Configuring github to send webhook posts to your webhook server
 
@@ -54,15 +60,3 @@ This project automates the update process of Docker-based project when the sourc
   - Leave the defaults and click Add webhook
 
 ## That's it!!!
-
-## If will want to start the application automatically
-
-- Install the pm2 package,
-  - `npm install pm2 -g`
-- Start your server with pm2
-  - `pm2 start server.js`
-- Save the current state of pm2
-  - `pm2 save`
-- Enable pm2 to start at boot
-  - `pm2 startup`
-    This will create a systemd service file for pm2, which will ensure that pm2 is started automatically whenever the system boots.
