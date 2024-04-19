@@ -54,3 +54,15 @@ This project automates the update process of Docker-based project when the sourc
   - Leave the defaults and click Add webhook
 
 ## That's it!!!
+
+## If will want to start the application automatically
+
+- Install the pm2 package,
+  - `npm install pm2 -g`
+- Start your server with pm2
+  - `pm2 start server.js`
+- Save the current state of pm2
+  - `pm2 save`
+- Enable pm2 to start at boot
+  - `pm2 startup`
+    This will create a systemd service file for pm2, which will ensure that pm2 is started automatically whenever the system boots.
