@@ -40,12 +40,12 @@ This project automates the update process of Docker-based project when the sourc
 - Running the server
   - Option 1 if you do not want the server to restart after a reboot or crash
     - `node server.js`
-  - [DO NOT USE THIS OPTION YET, PACKAGE HAS AN ISSUE] Option 2 to run with automatic restart
+  - Option 2 to run with automatic restart (WARNING NEED FURTHER TESTING)
     - Start your server with pm2
-      - `npm i pm2 -g` <-- we need to find out what the problem is...
+      - `npm i pm2 -g` <-- I had to install this OUTSIDE the project...
+      - `pm2 startup` <-- I also believe this needs to be done outside the project
       - `pm2 start server.js`
       - `pm2 save`
-      - `pm2 startup`
 
 ## Configuring github to send webhook posts to your webhook server
 
