@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const express = require('express');
 const { exec } = require('child_process');
-//const bodyParser = require('body-parser');
 
 const { verifySignature } = require('./utils/withAuth.js');
 const listeningSites = require('./config.json');
