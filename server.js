@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const { exec } = require('child_process');
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 
 const { verifySignature } = require('./utils/withAuth.js');
 const listeningSites = require('./config.json');
@@ -11,7 +11,7 @@ const app = express();
 const port = process.env.PORT || 3011;
 
 // Middleware to parse JSON bodies
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.post('/:project', (req, res) => {
   console.log('Received webhook:', req.body);
